@@ -1,1 +1,10 @@
-[]
+[
+  { "id": "r1", "name": "Dual-Band Wi-Fi 6 Router", "price": 349, "cat": "routers", "img": "https://images.unsplash.com/photo-1586810724476-c294fb7ac01b?q=80&w=1200&auto=format&fit=crop", "desc": "Gigabit WAN/LAN, MU-MIMO, WPA3" },
+  { "id": "s1", "name": "8-Port Gigabit Switch", "price": 189, "cat": "switches", "img": "https://images.unsplash.com/photo-1587202372775-98927b785a20?q=80&w=1200&auto=format&fit=crop", "desc": "Fanless desktop, metal housing" },
+  { "id": "ap1", "name": "Ceiling Access Point Wi-Fi 6", "price": 499, "cat": "access-points", "img": "https://images.unsplash.com/photo-1527866959252-deab85ef7d1a?q=80&w=1200&auto=format&fit=crop", "desc": "PoE, roaming, VLAN" },
+  { "id": "c1", "name": "Cat6 Patch Cable 3m", "price": 25, "cat": "cables", "img": "https://images.unsplash.com/photo-1586776977607-310e9c7257fb?q=80&w=1200&auto=format&fit=crop", "desc": "UTP, snagless boots" },
+  { "id": "h1", "name": "Over-Ear Headphones", "price": 279, "cat": "headphones", "img": "https://images.unsplash.com/photo-1518443881190-5a701fd2e7a6?q=80&w=1200&auto=format&fit=crop", "desc": "40mm drivers, comfy fit" },
+  { "id": "rck1", "name": "12U Network Rack", "price": 799, "cat": "racks", "img": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop", "desc": "Wall-mount, lockable door" },
+  { "id": "ft1", "name": "Fiber Cleaver", "price": 1499, "cat": "fiber-tools", "img": "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop", "desc": "High-precision cleaves" },
+  { "id": "ft2", "name": "Optical Power Meter", "price": 899, "cat": "fiber-tools", "img": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop", "desc": "dBm/dB, 850-1625nm" }
+]

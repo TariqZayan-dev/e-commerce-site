@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout — Dubai Electro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="./"><span class="logo-dot"></span><strong>Dubai Electro</strong></a>
+      <div class="nav-right"><a class="nav-link" href="cart.html">Cart</a></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Checkout</h1>
+    <p class="muted">Prices exclude VAT. 5% VAT and AED 15 shipping are added below.</p>
+
+    <!-- Netlify form -->
+    <form id="order-form" name="order" method="POST" action="/order-success.html" data-netlify="true" netlify-honeypot="bot-field" class="form card" novalidate>
+      <input type="hidden" name="form-name" value="order" />
+      <p class="sr-only"><label>Don’t fill this if you’re human <input name="bot-field" /></label></p>
+      <input type="hidden" id="order-summary" name="orderSummary" />
+
+      <div class="grid-2">
+        <div>
+          <label>Name</label>
+          <input name="name" required placeholder="Your full name" />
+        </div>
+        <div>
+          <label>Phone</label>
+          <input name="phone" inputmode="tel" required placeholder="+971 5x xxx xxxx" />
+        </div>
+        <div>
+          <label>Email</label>
+          <input name="email" type="email" required placeholder="you@example.com" />
+        </div>
+        <div>
+          <label>City</label>
+          <input name="city" required placeholder="Dubai" />
+        </div>
+        <div class="full">
+          <label>Address</label>
+          <input name="address" required placeholder="Street, building, flat…" />
+        </div>
+        <div class="full">
+          <label>Notes (optional)</label>
+          <textarea name="notes" rows="4" placeholder="Delivery notes, timing…"></textarea>
+        </div>
+      </div>
+
+      <div class="totals-block">
+        <div class="row"><span>Subtotal</span><strong id="co-sub">AED 0.00</strong></div>
+        <div class="row"><span>VAT (5%)</span><strong id="co-vat">AED 0.00</strong></div>
+        <div class="row"><span>Shipping</span><strong id="co-ship">AED 15.00</strong></div>
+        <div class="row total"><span>Total</span><strong id="co-total">AED 0.00</strong></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn accent" type="submit">Place order</button>
+        <a id="co-wa" class="btn outline" target="_blank" rel="noopener">Order via WhatsApp</a>
+      </div>
+      <p id="co-status" class="muted tiny" role="status"></p>
+    </form>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

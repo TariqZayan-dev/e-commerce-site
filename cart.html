@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Cart — Dubai Electro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="./"><span class="logo-dot"></span><strong>Dubai Electro</strong></a>
+      <div class="nav-right">
+        <a class="nav-link" href="checkout.html">Checkout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Your cart</h1>
+    <div id="cart-empty" class="card muted" style="display:none;padding:18px">Your cart is empty.</div>
+    <div id="cart-list" class="cart-list"></div>
+
+    <aside class="totals card">
+      <div class="row"><span>Subtotal</span><strong id="t-sub">AED 0.00</strong></div>
+      <div class="row"><span>VAT (5%)</span><strong id="t-vat">AED 0.00</strong></div>
+      <div class="row"><span>Shipping</span><strong id="t-ship">AED 15.00</strong></div>
+      <div class="row total"><span>Total</span><strong id="t-total">AED 0.00</strong></div>
+      <div class="actions">
+        <a class="btn" href="./">Continue shopping</a>
+        <a class="btn accent" href="checkout.html">Proceed to checkout</a>
+      </div>
+    </aside>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
