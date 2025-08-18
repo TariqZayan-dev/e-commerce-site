@@ -1,71 +1,93 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Checkout — Dubai Electro</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – NetTech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <header class="site-header">
+<body class="checkout-page">
+  <header>
     <div class="container nav">
-      <a class="brand" href="./"><span class="logo-dot"></span><strong>Dubai Electro</strong></a>
-      <div class="nav-right"><a class="nav-link" href="cart.html">Cart</a></div>
+      <div class="logo">NetTech</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#categories">Categories</a></li>
+          <li><a href="index.html#products">Products</a></li>
+          <li><a href="checkout.html" class="active">Cart</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
-
-  <main class="container">
-    <h1>Checkout</h1>
-    <p class="muted">Prices exclude VAT. 5% VAT and AED 15 shipping are added below.</p>
-
-    <!-- Netlify form -->
-    <form id="order-form" name="order" method="POST" action="/order-success.html" data-netlify="true" netlify-honeypot="bot-field" class="form card" novalidate>
-      <input type="hidden" name="form-name" value="order" />
-      <p class="sr-only"><label>Don’t fill this if you’re human <input name="bot-field" /></label></p>
-      <input type="hidden" id="order-summary" name="orderSummary" />
-
-      <div class="grid-2">
-        <div>
-          <label>Name</label>
-          <input name="name" required placeholder="Your full name" />
+  <main class="container" style="padding-top:2rem; padding-bottom:4rem;">
+    <h2>Checkout</h2>
+    <p class="animate-on-scroll">Review your items and provide your details below to complete your purchase.</p>
+    <div class="animate-on-scroll" style="overflow-x:auto; margin-top:1rem;">
+      <table style="width:100%; border-collapse: collapse; text-align:left;">
+        <thead>
+          <tr>
+            <th style="padding:0.75rem; border-bottom:1px solid var(--secondary-bg);">Image</th>
+            <th style="padding:0.75rem; border-bottom:1px solid var(--secondary-bg);">Product</th>
+            <th style="padding:0.75rem; border-bottom:1px solid var(--secondary-bg);">Price</th>
+            <th style="padding:0.75rem; border-bottom:1px solid var(--secondary-bg);">Qty</th>
+          </tr>
+        </thead>
+        <tbody id="cart-items">
+          <!-- Items will be injected here by script.js -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"></td>
+            <td style="padding:0.75rem; font-weight:600;">Total:</td>
+            <td style="padding:0.75rem; font-weight:600;">$<span id="cart-total">0.00</span></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <form id="checkout-form" class="animate-on-scroll" style="margin-top:2rem;">
+      <div style="display:flex; flex-wrap:wrap; gap:1.5rem;">
+        <div style="flex:1 1 300px;">
+          <label for="name" style="display:block; margin-bottom:0.5rem;">Full Name</label>
+          <input type="text" id="name" name="name" required style="width:100%; padding:0.7rem; border-radius:4px; border:none; background:var(--secondary-bg); color:var(--text-light);" />
         </div>
-        <div>
-          <label>Phone</label>
-          <input name="phone" inputmode="tel" required placeholder="+971 5x xxx xxxx" />
-        </div>
-        <div>
-          <label>Email</label>
-          <input name="email" type="email" required placeholder="you@example.com" />
-        </div>
-        <div>
-          <label>City</label>
-          <input name="city" required placeholder="Dubai" />
-        </div>
-        <div class="full">
-          <label>Address</label>
-          <input name="address" required placeholder="Street, building, flat…" />
-        </div>
-        <div class="full">
-          <label>Notes (optional)</label>
-          <textarea name="notes" rows="4" placeholder="Delivery notes, timing…"></textarea>
+        <div style="flex:1 1 300px;">
+          <label for="email" style="display:block; margin-bottom:0.5rem;">Email</label>
+          <input type="email" id="email" name="email" required style="width:100%; padding:0.7rem; border-radius:4px; border:none; background:var(--secondary-bg); color:var(--text-light);" />
         </div>
       </div>
-
-      <div class="totals-block">
-        <div class="row"><span>Subtotal</span><strong id="co-sub">AED 0.00</strong></div>
-        <div class="row"><span>VAT (5%)</span><strong id="co-vat">AED 0.00</strong></div>
-        <div class="row"><span>Shipping</span><strong id="co-ship">AED 15.00</strong></div>
-        <div class="row total"><span>Total</span><strong id="co-total">AED 0.00</strong></div>
+      <div style="margin-top:1.5rem;">
+        <label for="address" style="display:block; margin-bottom:0.5rem;">Shipping Address</label>
+        <textarea id="address" name="address" rows="3" required style="width:100%; padding:0.7rem; border-radius:4px; border:none; background:var(--secondary-bg); color:var(--text-light);"></textarea>
       </div>
-
-      <div class="actions">
-        <button class="btn accent" type="submit">Place order</button>
-        <a id="co-wa" class="btn outline" target="_blank" rel="noopener">Order via WhatsApp</a>
+      <div style="margin-top:1.5rem;">
+        <label for="payment" style="display:block; margin-bottom:0.5rem;">Payment Method</label>
+        <select id="payment" name="payment" required style="width:100%; padding:0.7rem; border-radius:4px; border:none; background:var(--secondary-bg); color:var(--text-light);">
+          <option value="credit">Credit Card</option>
+          <option value="cod">Cash on Delivery</option>
+        </select>
       </div>
-      <p id="co-status" class="muted tiny" role="status"></p>
+      <button type="submit" style="margin-top:2rem; padding:0.8rem 1.6rem; background-color:var(--accent-teal); color:var(--primary-bg); border:none; border-radius:4px; font-weight:600; cursor:pointer;">Place Order</button>
     </form>
   </main>
-
-  <script src="script.js" defer></script>
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h5>Need Help?</h5>
+        <p>If you have any issues with your order, reach out and we'll be happy to help.</p>
+        <a class="whatsapp-btn" href="https://wa.me/971542470680" target="_blank">WhatsApp Support</a>
+      </div>
+      <div>
+        <h5>Back to Shop</h5>
+        <ul>
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#categories">Categories</a></li>
+          <li><a href="index.html#products">Products</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
