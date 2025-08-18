@@ -377,3 +377,39 @@ footer {
     flex: 1 1 100%;
   }
 }
+
+/* Checkout qty controls */
+.qty-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qty-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent-yellow);
+  color: #001e2b;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.qty-btn:hover { transform: translateY(-2px); background: #ffd95a; }
+.qty { min-width: 20px; display: inline-block; text-align: center; }
+
+.remove-btn {
+  margin-left: 0.5rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.remove-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }

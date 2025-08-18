@@ -21,9 +21,12 @@
       </nav>
     </div>
   </header>
+
   <main class="container" style="padding-top:2rem; padding-bottom:4rem;">
     <h2>Checkout</h2>
     <p class="animate-on-scroll">Review your items and provide your details below to complete your purchase.</p>
+
+    <!-- CART TABLE -->
     <div class="animate-on-scroll" style="overflow-x:auto; margin-top:1rem;">
       <table style="width:100%; border-collapse: collapse; text-align:left;">
         <thead>
@@ -35,17 +38,19 @@
           </tr>
         </thead>
         <tbody id="cart-items">
-          <!-- Items will be injected here by script.js -->
+          <!-- rows injected by script.js -->
         </tbody>
         <tfoot>
           <tr>
             <td colspan="2"></td>
             <td style="padding:0.75rem; font-weight:600;">Total:</td>
-            <td style="padding:0.75rem; font-weight:600;">AED<span id="cart-total">0.00</span></td>
+            <td style="padding:0.75rem; font-weight:600;" id="cart-total">AED 0.00</td>
           </tr>
         </tfoot>
       </table>
     </div>
+
+    <!-- CHECKOUT FORM -->
     <form id="checkout-form" class="animate-on-scroll" style="margin-top:2rem;">
       <div style="display:flex; flex-wrap:wrap; gap:1.5rem;">
         <div style="flex:1 1 300px;">
@@ -71,6 +76,7 @@
       <button type="submit" style="margin-top:2rem; padding:0.8rem 1.6rem; background-color:var(--accent-teal); color:var(--primary-bg); border:none; border-radius:4px; font-weight:600; cursor:pointer;">Place Order</button>
     </form>
   </main>
+
   <footer>
     <div class="container footer-grid">
       <div>
@@ -88,6 +94,7 @@
       </div>
     </div>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

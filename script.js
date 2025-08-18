@@ -1,90 +1,149 @@
 /*
- * Ecommerce Website Script
- *
- * Handles scroll-triggered animations, simple cart storage via localStorage,
- * and page transitions between catalog, checkout and thanks pages.
+ * Ecommerce Website Script (AED + proper checkout rendering + qty controls)
+ * - Adds products to cart (merges duplicates)
+ * - Renders cart with image, name, price, qty (+ / −), and delete
+ * - Totals in AED
+ * - Uses localStorage
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Scroll animations using IntersectionObserver
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
+  const CART_KEY = 'ecommerce_cart';
+  const CURRENCY = 'AED';
 
-  document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-    observer.observe(el);
-  });
+  // ---------- helpers ----------
+  const getCart = () => {
+    try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+    catch { return []; }
+  };
+  const setCart = (items) => localStorage.setItem(CART_KEY, JSON.stringify(items));
 
-  // Cart functions
-  const cartKey = 'ecommerce_cart';
-
-  function getCart() {
-    try {
-      return JSON.parse(localStorage.getItem(cartKey)) || [];
-    } catch (e) {
-      return [];
+  const addItem = ({ name, price, image }) => {
+    const cart = getCart();
+    const idx = cart.findIndex(i => i.name === name);
+    if (idx > -1) {
+      cart[idx].quantity += 1;
+    } else {
+      cart.push({ name, price: Number(price), image, quantity: 1 });
     }
-  }
+    setCart(cart);
+  };
 
-  function setCart(items) {
-    localStorage.setItem(cartKey, JSON.stringify(items));
-  }
+  const updateQty = (index, delta) => {
+    const cart = getCart();
+    if (!cart[index]) return;
+    cart[index].quantity += delta;
+    if (cart[index].quantity < 1) cart[index].quantity = 1;
+    setCart(cart);
+  };
 
-  // Add to cart buttons
+  const removeItem = (index) => {
+    const cart = getCart();
+    cart.splice(index, 1);
+    setCart(cart);
+  };
+
+  // ---------- catalog page: add-to-cart ----------
   document.querySelectorAll('.add-to-cart').forEach((btn) => {
     btn.addEventListener('click', (e) => {
-      const productCard = e.currentTarget.closest('.product-card');
-      const name = productCard.dataset.name;
-      const price = parseFloat(productCard.dataset.price);
-      const image = productCard.dataset.image;
-      const cart = getCart();
-      cart.push({ name, price, image, quantity: 1 });
-      setCart(cart);
-      // Provide feedback to user
-      e.currentTarget.innerText = 'Added!';
-      setTimeout(() => {
-        e.currentTarget.innerText = 'Add to Cart';
-      }, 1500);
+      const card = e.currentTarget.closest('.product-card');
+      const name  = card.dataset.name;
+      const price = parseFloat(card.dataset.price);
+      // prefer data-image; fallback to <img src>
+      const image = card.dataset.image || card.querySelector('img')?.getAttribute('src') || '';
+      addItem({ name, price, image });
+
+      // simple feedback
+      btn.disabled = true;
+      const old = btn.textContent;
+      btn.textContent = 'Added!';
+      setTimeout(() => { btn.disabled = false; btn.textContent = old; }, 1200);
     });
   });
 
-  // On checkout page: populate table and handle form submission
+  // ---------- scroll animations ----------
+  const observer = new IntersectionObserver(
+    entries => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    }),
+    { threshold: 0.2 }
+  );
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+  // ---------- checkout page ----------
   if (document.body.classList.contains('checkout-page')) {
-    const cartTable = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    const items = getCart();
-    if (items.length === 0) {
-      cartTable.innerHTML = '<tr><td colspan="4">Your cart is empty.</td></tr>';
-      cartTotal.innerText = '0.00';
-    } else {
-      let total = 0;
-      items.forEach((item) => {
-        total += item.price * item.quantity;
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td><img src="AED{item.image}" alt="AED{item.name}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;"></td>
-          <td>AED{item.name}</td>
-          <td>AED{item.price.toFixed(2)}</td>
-          <td>AED{item.quantity}</td>
+    const tbody = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+
+    const render = () => {
+      const items = getCart();
+      tbody.innerHTML = '';
+
+      if (items.length === 0) {
+        tbody.innerHTML = `
+          <tr><td colspan="4" style="padding:1rem;">Your cart is empty.</td></tr>
         `;
-        cartTable.appendChild(row);
+        totalEl.textContent = `${CURRENCY} 0.00`;
+        return;
+      }
+
+      let total = 0;
+      items.forEach((item, i) => {
+        total += item.price * item.quantity;
+        const tr = document.createElement('tr');
+        tr.dataset.index = i;
+
+        tr.innerHTML = `
+          <td style="padding:0.75rem;">
+            <img src="${item.image || ''}" alt="${item.name}"
+                 style="width:60px;height:40px;object-fit:cover;border-radius:4px;background:#0e2230;">
+          </td>
+          <td style="padding:0.75rem;">${item.name}</td>
+          <td style="padding:0.75rem;">${CURRENCY} ${item.price.toFixed(2)}</td>
+          <td style="padding:0.75rem;">
+            <div class="qty-controls">
+              <button class="qty-btn minus" aria-label="Decrease">−</button>
+              <span class="qty">${item.quantity}</span>
+              <button class="qty-btn plus" aria-label="Increase">+</button>
+              <button class="remove-btn" aria-label="Remove">🗑</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
       });
-      cartTotal.innerText = total.toFixed(2);
-    }
-    const checkoutForm = document.getElementById('checkout-form');
-    if (checkoutForm) {
-      checkoutForm.addEventListener('submit', (e) => {
+
+      totalEl.textContent = `${CURRENCY} ${total.toFixed(2)}`;
+    };
+
+    // event delegation for + / − / delete
+    tbody.addEventListener('click', (e) => {
+      const row = e.target.closest('tr');
+      if (!row) return;
+      const index = Number(row.dataset.index);
+
+      if (e.target.classList.contains('plus')) {
+        updateQty(index, +1);
+        render();
+      } else if (e.target.classList.contains('minus')) {
+        updateQty(index, -1);
+        render();
+      } else if (e.target.classList.contains('remove-btn')) {
+        removeItem(index);
+        render();
+      }
+    });
+
+    // render on load
+    render();
+
+    // place-order: keep your existing behaviour
+    const form = document.getElementById('checkout-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
         e.preventDefault();
-        // Clear cart and redirect to thanks page
-        localStorage.removeItem(cartKey);
+        localStorage.removeItem(CART_KEY);
         window.location.href = 'thanks.html';
       });
     }
