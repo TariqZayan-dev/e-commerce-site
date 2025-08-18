@@ -1,11 +1,6 @@
 /*
  * Ecommerce Website Styles
- *
- * This stylesheet defines the colours, typography and layout for a dark themed
- * electronics ecommerce site. Inspired by the provided chair shop design,
- * the colour palette revolves around deep navy backgrounds with bright
- * accents. Animations are used sparingly to bring content to life without
- * overwhelming visitors. Mobile responsiveness has been carefully considered.
+ * Corrected nav links and category button alignment
  */
 
 /* Reset and base styles */
@@ -35,7 +30,7 @@ body {
   --accent-teal: #00a8b5;       /* cool teal */
   --accent-green: #00b44b;      /* vibrant green */
   --text-light: #f5f7fa;        /* near white */
-  --text-muted: #a5b1c2;        /* muted blue‑grey */
+  --text-muted: #a5b1c2;        /* muted blue-grey */
 }
 
 /* Typography */
@@ -67,7 +62,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #00a8b5;
+  background: linear-gradient(90deg, #0077b6, #00a8b5);/* teal header */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -91,14 +86,24 @@ header {
   gap: 2rem;
 }
 
+/* FIXED NAV LINKS */
 .nav li a {
-  color: var(--text-light);
-  font-weight: 500;
-  transition: color 0.3s ease;
+  color: #000; /* black text for visibility on teal */
+  font-weight: 600;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
-.nav li a:hover {
-  color: var(--accent-teal);
+.nav li a:hover,
+.nav li a:active {
+  color: #000;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.nav li a:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
 }
 
 /* Hero Section */
@@ -157,6 +162,7 @@ header {
   gap: 2rem;
 }
 
+/* FIXED CATEGORY CARD ALIGNMENT */
 .category-card {
   background-color: var(--secondary-bg);
   border-radius: 8px;
@@ -165,6 +171,9 @@ header {
   transition: transform 0.5s ease, box-shadow 0.5s ease;
   opacity: 0;
   transform: translateY(40px);
+
+  display: flex;
+  flex-direction: column;
 }
 
 .category-card.in-view {
@@ -185,6 +194,9 @@ header {
 
 .category-card .category-body {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .category-card h3 {
@@ -207,6 +219,7 @@ header {
   font-size: 0.9rem;
   font-weight: 600;
   transition: background-color 0.3s ease;
+  margin-top: auto; /* keeps button aligned at bottom */
 }
 
 .category-card a:hover {
@@ -260,7 +273,7 @@ header {
 }
 
 .product-card .price {
-  color: var(--accent-green);
+  color: #fff;;
   font-size: 1.4rem;
   margin: 0.5rem 0;
   font-weight: 600;
@@ -364,4 +377,3 @@ footer {
     flex: 1 1 100%;
   }
 }
-

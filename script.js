@@ -70,10 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
         total += item.price * item.quantity;
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td><img src="${item.image}" alt="${item.name}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;"></td>
-          <td>${item.name}</td>
-          <td>$${item.price.toFixed(2)}</td>
-          <td>${item.quantity}</td>
+          <td><img src="AED{item.image}" alt="AED{item.name}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;"></td>
+          <td>AED{item.name}</td>
+          <td>AED{item.price.toFixed(2)}</td>
+          <td>AED{item.quantity}</td>
         `;
         cartTable.appendChild(row);
       });
