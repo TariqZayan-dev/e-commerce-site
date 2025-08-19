@@ -413,3 +413,33 @@ footer {
   transition: background-color 0.2s ease, transform 0.15s ease;
 }
 .remove-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+/* === Quick Wrap navbar for small screens (no JS) === */
+@media (max-width: 768px) {
+  header { overflow-x: clip; }            /* ensure header never causes sideways scroll */
+  .nav { padding: 0.6rem 0; }
+
+  .nav .logo {
+    font-size: 1.3rem;                    /* give links more room */
+    flex: 0 0 auto;
+  }
+
+  .nav ul {
+    flex-wrap: wrap;                       /* <-- allow wrapping to 2 lines */
+    justify-content: flex-start;           /* left-align wrapped items */
+    gap: 0.5rem 1rem;                      /* smaller gaps on mobile (row col) */
+    max-width: 100%;
+  }
+
+  .nav li a {
+    font-size: 0.95rem;                    /* slightly smaller so it fits */
+    line-height: 1.2;
+    padding: 0.15rem 0;                    /* tighter vertical rhythm */
+  }
+}
+
+/* extra safety for very narrow phones */
+@media (max-width: 420px) {
+  .nav li a { font-size: 0.9rem; }
+  .nav ul { gap: 0.4rem 0.8rem; }
+}
