@@ -4,13 +4,38 @@
  * - Renders cart with image, name, price, qty (+ / −), and delete
  * - Totals in AED
  * - Uses localStorage
+ * - Mobile: hamburger drawer menu
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const CART_KEY = 'ecommerce_cart';
   const CURRENCY = 'AED';
 
-  // ---------- helpers ----------
+  /* ===========================
+     HAMBURGER MENU (mobile)
+     =========================== */
+  const headerEl = document.querySelector('header');
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const menuLinks = document.querySelectorAll('#primary-menu a');
+
+  if (toggleBtn && headerEl) {
+    const closeMenu = () => {
+      headerEl.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    };
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = headerEl.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    menuLinks.forEach((a) => a.addEventListener('click', closeMenu));
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) closeMenu();
+    });
+  }
+
+  /* ===========================
+     CART HELPERS
+     =========================== */
   const getCart = () => {
     try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
     catch { return []; }
@@ -19,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const addItem = ({ name, price, image }) => {
     const cart = getCart();
-    const idx = cart.findIndex(i => i.name === name);
+    const idx = cart.findIndex((i) => i.name === name);
     if (idx > -1) {
       cart[idx].quantity += 1;
     } else {
@@ -42,37 +67,55 @@ document.addEventListener('DOMContentLoaded', () => {
     setCart(cart);
   };
 
-  // ---------- catalog page: add-to-cart ----------
+  /* ===========================
+     CATALOG: ADD TO CART
+     =========================== */
   document.querySelectorAll('.add-to-cart').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const card = e.currentTarget.closest('.product-card');
-      const name  = card.dataset.name;
+      if (!card) return;
+      const name = card.dataset.name;
       const price = parseFloat(card.dataset.price);
       // prefer data-image; fallback to <img src>
-      const image = card.dataset.image || card.querySelector('img')?.getAttribute('src') || '';
+      const image =
+        card.dataset.image ||
+        card.querySelector('img')?.getAttribute('src') ||
+        '';
+
       addItem({ name, price, image });
 
       // simple feedback
       btn.disabled = true;
       const old = btn.textContent;
       btn.textContent = 'Added!';
-      setTimeout(() => { btn.disabled = false; btn.textContent = old; }, 1200);
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = old;
+      }, 1200);
     });
   });
 
-  // ---------- scroll animations ----------
+  /* ===========================
+     SCROLL ANIMATIONS
+     =========================== */
   const observer = new IntersectionObserver(
-    entries => entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
-    }),
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
     { threshold: 0.2 }
   );
-  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  document
+    .querySelectorAll('.animate-on-scroll')
+    .forEach((el) => observer.observe(el));
 
-  // ---------- checkout page ----------
+  /* ===========================
+     CHECKOUT PAGE
+     =========================== */
   if (document.body.classList.contains('checkout-page')) {
     const tbody = document.getElementById('cart-items');
     const totalEl = document.getElementById('cart-total');
@@ -82,9 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
       tbody.innerHTML = '';
 
       if (items.length === 0) {
-        tbody.innerHTML = `
-          <tr><td colspan="4" style="padding:1rem;">Your cart is empty.</td></tr>
-        `;
+        tbody.innerHTML =
+          '<tr><td colspan="4" style="padding:1rem;">Your cart is empty.</td></tr>';
         totalEl.textContent = `${CURRENCY} 0.00`;
         return;
       }
@@ -117,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
       totalEl.textContent = `${CURRENCY} ${total.toFixed(2)}`;
     };
 
-    // event delegation for + / − / delete
+    // qty + / − / delete (event delegation)
     tbody.addEventListener('click', (e) => {
       const row = e.target.closest('tr');
       if (!row) return;
@@ -135,16 +177,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // render on load
+    // initial paint
     render();
 
-    // place-order: keep your existing behaviour
+    // Netlify form submit:
+    // - DO NOT preventDefault so Netlify captures it
+    // - we can clear cart just before leaving the page
     const form = document.getElementById('checkout-form');
     if (form) {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        localStorage.removeItem(CART_KEY);
-        window.location.href = 'thanks.html';
+      form.addEventListener('submit', () => {
+        try { localStorage.removeItem(CART_KEY); } catch (e) {}
+        // allow natural POST to /thanks.html handled by Netlify Forms
       });
     }
   }
