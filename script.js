@@ -12,46 +12,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const CURRENCY = 'AED';
 
   /* ===========================
-   HAMBURGER MENU (mobile)
-   =========================== */
-const headerEl = document.querySelector('header');
-const toggleBtn = document.querySelector('.menu-toggle');
-const menuLinks = document.querySelectorAll('#primary-menu a');
+     HAMBURGER MENU (mobile)
+     =========================== */
+  const headerEl = document.querySelector('header');
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const menuLinks = document.querySelectorAll('#primary-menu a');
 
-if (toggleBtn && headerEl) {
-  const closeMenu = () => {
-    headerEl.classList.remove('open');
-    toggleBtn.setAttribute('aria-expanded', 'false');
-  };
+  if (toggleBtn && headerEl) {
+    const closeMenu = () => {
+      headerEl.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    };
 
-  const openMenu = () => {
-    headerEl.classList.add('open');
-    toggleBtn.setAttribute('aria-expanded', 'true');
-  };
+    // Toggle open/close on button
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = headerEl.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    });
 
-  // Toggle open/close on button
-  toggleBtn.addEventListener('click', () => {
-    const isOpen = headerEl.classList.toggle('open');
-    toggleBtn.setAttribute('aria-expanded', String(isOpen));
-  });
+    // Close when a menu link is clicked
+    menuLinks.forEach((a) => a.addEventListener('click', closeMenu));
 
-  // Close when a menu link is clicked
-  menuLinks.forEach((a) => a.addEventListener('click', closeMenu));
+    // Close when resizing to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) closeMenu();
+    });
 
-  // Close when resizing to desktop
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) closeMenu();
-  });
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
 
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
-
-  // One-time gentle pulse to hint it's interactive
-  setTimeout(() => toggleBtn.classList.add('pulse-once'), 300);
-  toggleBtn.addEventListener('animationend', () => toggleBtn.classList.remove('pulse-once'));
-}
+    // One-time gentle pulse to hint it's interactive
+    setTimeout(() => toggleBtn.classList.add('pulse-once'), 300);
+    toggleBtn.addEventListener('animationend', () => toggleBtn.classList.remove('pulse-once'));
+  }
 
   /* ===========================
      CART HELPERS
@@ -200,14 +195,11 @@ if (toggleBtn && headerEl) {
     // initial paint
     render();
 
-    // Netlify form submit:
-    // - DO NOT preventDefault so Netlify captures it
-    // - we can clear cart just before leaving the page
+    // Netlify form submit: let the POST happen; just clear cart
     const form = document.getElementById('checkout-form');
     if (form) {
       form.addEventListener('submit', () => {
         try { localStorage.removeItem(CART_KEY); } catch (e) {}
-        // allow natural POST to /thanks.html handled by Netlify Forms
       });
     }
   }
