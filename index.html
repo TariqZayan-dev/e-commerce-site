@@ -12,20 +12,26 @@
 </head>
 <body>
   <!-- Header -->
-  <header>
-    <div class="container nav">
-      <div class="logo">NetTech</div>
-      <nav>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#categories">Categories</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="checkout.html">Cart</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="container nav">
+    <div class="logo">NetTech</div>
+
+    <!-- Hamburger button -->
+    <button class="menu-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav>
+      <ul id="primary-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="checkout.html">Cart</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
   <!-- Hero Section -->
   <section class="hero" id="home">
