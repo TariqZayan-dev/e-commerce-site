@@ -1,16 +1,10 @@
 /*
  * Ecommerce Website Styles (clean)
- * - Final mobile hamburger drawer (no quick-wrap)
- * - Fixed minor typos
+ * - Final mobile hamburger drawer (single source of truth)
  */
 
 /* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body {
@@ -38,88 +32,56 @@ p { color: var(--text-muted); margin-bottom: 1rem; }
 a { text-decoration: none; color: inherit; }
 
 /* Container utility */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 0;
-}
+.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 2rem 0; }
 
 /* Header */
 header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: sticky; top: 0; z-index: 100;
   background: linear-gradient(90deg, #0077b6, #00a8b5);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
 .nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
   padding: 1rem 0;
 }
 
 .nav .logo {
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 1.6rem; font-weight: 700; letter-spacing: 1px;
   color: var(--accent-yellow);
 }
 
-.nav ul {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-}
+.nav ul { list-style: none; display: flex; gap: 2rem; }
 
 /* Nav links */
 .nav li a {
   color: #000; /* black text for visibility on teal */
   font-weight: 600;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  transition: color .2s ease, text-decoration-color .2s ease;
 }
-
-.nav li a:hover,
-.nav li a:active {
-  color: #000;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+.nav li a:hover, .nav li a:active {
+  color: #000; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px;
 }
-
-.nav li a:focus-visible {
-  outline: 2px solid #000;
-  outline-offset: 3px;
-}
+.nav li a:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
 
 /* Hero Section */
 .hero {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  min-height: 70vh;
-  padding: 4rem 0;
+  display: flex; flex-wrap: wrap; align-items: center;
+  min-height: 70vh; padding: 4rem 0;
   background:
-    linear-gradient(180deg, rgba(0, 30, 43, 0.9) 0%, rgba(0, 30, 43, 0.5) 100%),
+    linear-gradient(180deg, rgba(0,30,43,.9) 0%, rgba(0,30,43,.5) 100%),
     url('images/server-rack.jpg') center/cover no-repeat;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
-
 .hero .hero-content { flex: 1 1 500px; z-index: 1; }
 .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-light); }
 .hero p  { font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-muted); max-width: 500px; }
 
 .btn-primary {
-  display: inline-block;
-  padding: 0.8rem 1.6rem;
-  background-color: var(--accent-teal);
-  color: var(--primary-bg);
-  border-radius: 4px;
-  font-weight: 600;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  display: inline-block; padding: .8rem 1.6rem;
+  background-color: var(--accent-teal); color: var(--primary-bg);
+  border-radius: 4px; font-weight: 600;
+  transition: transform .3s ease, background-color .3s ease;
 }
 .btn-primary:hover { transform: translateY(-3px); background-color: var(--accent-yellow); }
 
@@ -127,109 +89,73 @@ header {
 .categories { padding: 3rem 0; }
 
 .category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;
 }
 
 /* Category cards (aligned buttons) */
 .category-card {
-  background-color: var(--secondary-bg);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-  opacity: 0;
-  transform: translateY(40px);
-  display: flex;
-  flex-direction: column;
+  background-color: var(--secondary-bg); border-radius: 8px; overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,.4);
+  transition: transform .5s ease, box-shadow .5s ease;
+  opacity: 0; transform: translateY(40px);
+  display: flex; flex-direction: column;
 }
 .category-card.in-view { opacity: 1; transform: translateY(0); }
-.category-card img {
-  width: 100%; height: 180px; object-fit: cover; transition: transform 0.5s ease;
-}
+.category-card img { width: 100%; height: 180px; object-fit: cover; transition: transform .5s ease; }
 .category-card:hover img { transform: scale(1.1); }
 .category-card .category-body { padding: 1rem; display: flex; flex-direction: column; flex: 1; }
-.category-card h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
-.category-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
+.category-card h3 { margin-bottom: .5rem; font-size: 1.3rem; }
+.category-card p  { font-size: .9rem; color: var(--text-muted); margin-bottom: 1rem; }
 .category-card a {
-  display: inline-block; padding: 0.5rem 1rem;
+  display: inline-block; padding: .5rem 1rem;
   background-color: var(--accent-yellow); color: var(--primary-bg);
-  border-radius: 4px; font-size: 0.9rem; font-weight: 600;
-  transition: background-color 0.3s ease; margin-top: auto;
+  border-radius: 4px; font-size: .9rem; font-weight: 600;
+  transition: background-color .3s ease; margin-top: auto;
 }
 .category-card a:hover { background-color: var(--accent-teal); }
 
 /* Products Section */
 .products { padding: 3rem 0; }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-}
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
 
 .product-card {
-  background-color: var(--secondary-bg);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-  opacity: 0;
-  transform: translateY(40px);
+  background-color: var(--secondary-bg); border-radius: 8px; overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,.5);
+  transition: transform .5s ease, box-shadow .5s ease;
+  opacity: 0; transform: translateY(40px);
 }
 .product-card.in-view { opacity: 1; transform: translateY(0); }
-
-.product-card img {
-  width: 100%; height: 200px; object-fit: cover; transition: transform 0.5s ease;
-}
+.product-card img { width: 100%; height: 200px; object-fit: cover; transition: transform .5s ease; }
 .product-card:hover img { transform: scale(1.05) rotate(1deg); }
-
 .product-card .product-body { padding: 1rem; }
-.product-card h4 { margin-bottom: 0.5rem; font-size: 1.2rem; }
-.product-card .price {
-  color: #fff;                 /* clean, neutral on dark cards */
-  font-size: 1.4rem;
-  margin: 0.5rem 0;
-  font-weight: 600;
-}
-.product-card p {
-  font-size: 0.85rem; color: var(--text-muted);
-  margin-bottom: 1rem; min-height: 48px;
-}
+.product-card h4 { margin-bottom: .5rem; font-size: 1.2rem; }
+.product-card .price { color: #fff; font-size: 1.4rem; margin: .5rem 0; font-weight: 600; }
+.product-card p { font-size: .85rem; color: var(--text-muted); margin-bottom: 1rem; min-height: 48px; }
 .product-card button {
-  padding: 0.6rem 1rem; background-color: var(--accent-teal); color: var(--primary-bg);
+  padding: .6rem 1rem; background-color: var(--accent-teal); color: var(--primary-bg);
   border: none; border-radius: 4px; font-weight: 600; cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition: transform .3s ease, background-color .3s ease;
 }
 .product-card button:hover { transform: translateY(-3px); background-color: var(--accent-yellow); }
 
 /* Footer */
 footer { background-color: var(--secondary-bg); padding: 2rem 0; color: var(--text-muted); }
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-}
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
 .footer-grid h5 { margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-light); }
 .footer-grid ul { list-style: none; }
-.footer-grid li { margin-bottom: 0.5rem; }
-.footer-grid li a { color: var(--text-muted); transition: color 0.3s ease; }
+.footer-grid li { margin-bottom: .5rem; }
+.footer-grid li a { color: var(--text-muted); transition: color .3s ease; }
 .footer-grid li a:hover { color: var(--accent-yellow); }
-
 .whatsapp-btn {
-  display: inline-block; margin-top: 1rem; padding: 0.6rem 1rem;
+  display: inline-block; margin-top: 1rem; padding: .6rem 1rem;
   background-color: #25d366; color: var(--primary-bg);
-  border-radius: 4px; font-weight: 600; transition: transform 0.3s ease;
+  border-radius: 4px; font-weight: 600; transition: transform .3s ease;
 }
 .whatsapp-btn:hover { transform: translateY(-3px); }
 
 /* Scroll animations */
-.animate-on-scroll {
-  opacity: 0; transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
+.animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
 .animate-on-scroll.in-view { opacity: 1; transform: translateY(0); }
 
 /* Basic mobile tweaks (not nav) */
@@ -239,285 +165,79 @@ footer { background-color: var(--secondary-bg); padding: 2rem 0; color: var(--te
 }
 
 /* Checkout qty controls */
-.qty-controls { display: inline-flex; align-items: center; gap: 0.5rem; }
+.qty-controls { display: inline-flex; align-items: center; gap: .5rem; }
 .qty-btn {
   width: 30px; height: 30px; border: none; border-radius: 6px;
   background: var(--accent-yellow); color: #001e2b;
   font-size: 18px; font-weight: 700; line-height: 1;
-  cursor: pointer; transition: transform 0.15s ease, background-color 0.2s ease;
+  cursor: pointer; transition: transform .15s ease, background-color .2s ease;
 }
 .qty-btn:hover { transform: translateY(-2px); background: #ffd95a; }
 .qty { min-width: 20px; display: inline-block; text-align: center; }
 .remove-btn {
-  margin-left: 0.5rem; padding: 6px 8px; border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.15); background: transparent; color: var(--text-light);
-  cursor: pointer; transition: background-color 0.2s ease, transform 0.15s ease;
+  margin-left: .5rem; padding: 6px 8px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.15); background: transparent; color: var(--text-light);
+  cursor: pointer; transition: background-color .2s ease, transform .15s ease;
 }
-.remove-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+.remove-btn:hover { background: rgba(255,255,255,.08); transform: translateY(-2px); }
 
-/* === MOBILE HAMBURGER — final drawer === */
+/* ======= MOBILE NAV & MENU BUTTON (single source of truth) ======= */
 
-/* button */
-.menu-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 10px;
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.menu-toggle span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: #000;            /* solid bars */
-}
+/* hide button on desktop */
+.menu-toggle { display: none; }
 
-/* drawer */
 @media (max-width: 768px) {
   html, body { overflow-x: hidden; }
   header { overflow: visible; }
-  .nav { position: relative; padding: 0.6rem 0; }
-
-  .menu-toggle { display: inline-flex; margin-left: auto; }
-
-  .nav ul {
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    margin-top: 8px; padding: 12px 16px;
-    background: linear-gradient(90deg, #0077b6, #00a8b5);
-    border-radius: 12px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-
-    display: flex; flex-direction: column; gap: 12px;
-
-    visibility: hidden; opacity: 0; transform: translateY(-6px);
-    pointer-events: none; z-index: 999;
-  }
-  header.open .nav ul {
-    visibility: visible; opacity: 1; transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .nav li a {
-    color: #000; font-size: 1rem; line-height: 1.3; padding: 6px 0;
-    text-decoration: none;
-  }
-}
-
-/* === Mobile Menu Button: gradient pill + label, X morph, one-time pulse === */
-
-/* button base */
-.menu-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 42px;
-  padding: 0 14px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 999px; /* pill */
-  background: linear-gradient(90deg, #0077b6, #00a8b5);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
-}
-.menu-toggle:active { transform: scale(0.98); }
-.menu-toggle:focus-visible { outline: 2px solid var(--accent-yellow); outline-offset: 3px; }
-
-.menu-toggle .label {
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  font-size: 0.95rem;
-  line-height: 1;
-}
-
-/* 3 bars */
-.menu-toggle .bar {
-  width: 18px;
-  height: 2px;
-  background: #fff;        /* white bars on gradient */
-  border-radius: 2px;
-  transition: transform 0.25s ease, opacity 0.2s ease;
-}
-
-/* layout on mobile */
-@media (max-width: 768px) {
-  .menu-toggle { display: inline-flex; margin-left: auto; }
-  .nav { position: relative; padding: 0.6rem 0; }
-
-  /* dropdown drawer */
-  .nav ul {
-    position: absolute; top: 100%; left: 0; right: 0;
-    margin-top: 8px; padding: 12px 16px;
-    background: linear-gradient(90deg, #0077b6, #00a8b5);
-    border-radius: 12px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    display: flex; flex-direction: column; gap: 12px;
-    visibility: hidden; opacity: 0; transform: translateY(-6px);
-    pointer-events: none; z-index: 999;
-    overflow: hidden;
-  }
-  header.open .nav ul { visibility: visible; opacity: 1; transform: translateY(0); pointer-events: auto; }
-
-  .nav li a { color: #000; font-size: 1rem; line-height: 1.3; padding: 6px 0; text-decoration: none; }
-}
-
-/* icon -> X when open */
-header.open .menu-toggle .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-header.open .menu-toggle .bar:nth-child(2) { opacity: 0; }
-header.open .menu-toggle .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-/* one-time gentle pulse */
-@keyframes pulseOnce {
-  0%   { transform: scale(1);   box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
-  50%  { transform: scale(1.05); box-shadow: 0 10px 24px rgba(0,0,0,0.3); }
-  100% { transform: scale(1);   box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
-}
-.menu-toggle.pulse-once { animation: pulseOnce 1.1s ease-out 1 1.2s; }
-
-/* === FIX: Make mobile Menu a real pill with label inside === */
-@media (max-width: 768px) {
-  .menu-toggle {
-    /* force pill sizing (override any earlier width/height) */
-    width: auto !important;
-    min-width: 112px;              /* enough room for 'Menu' + bars */
-    height: 48px !important;
-    padding: 0 18px !important;
-
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    border-radius: 999px;
-    background: linear-gradient(90deg, #0077b6, #00a8b5);
-    border: 1px solid rgba(0,0,0,0.15);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.28);
-    margin-left: auto;             /* push to right */
-    overflow: hidden;              /* keep label inside */
-    z-index: 1001;                 /* sit above content */
-  }
-
-  .menu-toggle .label {
-    color: #fff;
-    font-weight: 700;
-    letter-spacing: .2px;
-    font-size: 1rem;
-    line-height: 1;
-    white-space: nowrap;           /* no wrapping outside the pill */
-  }
-
-  .menu-toggle .bar {
-    width: 20px;
-    height: 2.5px;
-    background: #fff;
-    border-radius: 2px;
-    transition: transform .25s ease, opacity .2s ease;
-  }
-
-  /* button interactions */
-  .menu-toggle:active { transform: scale(.98); }
-  .menu-toggle:focus-visible { outline: 2px solid var(--accent-yellow); outline-offset: 3px; }
-
-  /* drawer (unchanged, but ensure it's not overlapping the button) */
   .nav { position: relative; padding: .6rem 0; }
-  .nav ul {
-    position: absolute; top: 100%; left: 0; right: 0;
-    margin-top: 10px; padding: 12px 16px;
-    background: linear-gradient(90deg, #0077b6, #00a8b5);
-    border-radius: 12px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    display: flex; flex-direction: column; gap: 12px;
-    visibility: hidden; opacity: 0; transform: translateY(-6px);
-    pointer-events: none; z-index: 1000;
-  }
-  header.open .nav ul { visibility: visible; opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-  .nav li a { color: #000; font-size: 1rem; line-height: 1.3; padding: 6px 0; }
-}
-
-/* icon -> X when open (works with the 3 bars as first children) */
-header.open .menu-toggle .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-header.open .menu-toggle .bar:nth-child(2) { opacity: 0; }
-header.open .menu-toggle .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* one-time gentle pulse (hint it's tappable) */
-@keyframes pulseOnce {
-  0% { transform: scale(1);   box-shadow: 0 8px 22px rgba(0,0,0,0.28); }
-  50%{ transform: scale(1.05);box-shadow: 0 12px 28px rgba(0,0,0,0.34); }
-  100%{transform: scale(1);   box-shadow: 0 8px 22px rgba(0,0,0,0.28); }
-}
-.menu-toggle.pulse-once { animation: pulseOnce 1.1s ease-out 1 0.9s; }
-
-/* === Final Mobile Menu pill: stacked bars, X morph, label hides when open === */
-@media (max-width: 768px) {
+  /* pill button */
   .menu-toggle {
     position: relative;
     display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
+    align-items: center; justify-content: center;
     gap: 10px;
 
-    /* pill sizing */
     width: auto !important;
-    min-width: 128px;
+    min-width: 140px;
     height: 48px !important;
-    padding: 0 18px 0 56px;               /* left space reserved for bars */
+    padding: 0 18px 0 56px;         /* space for bars on the left */
 
     border-radius: 999px;
     background: linear-gradient(90deg, #0077b6, #00a8b5);
     border: 1px solid rgba(0,0,0,0.15);
     box-shadow: 0 8px 22px rgba(0,0,0,0.28);
     margin-left: auto;
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    transition: transform .15s ease, box-shadow .2s ease;
+    overflow: hidden; z-index: 1001;
   }
   .menu-toggle:active { transform: scale(.98); }
   .menu-toggle:focus-visible { outline: 2px solid var(--accent-yellow); outline-offset: 3px; }
 
-  /* label inside the pill */
+  /* label */
   .menu-toggle .label {
-    color: #fff;
-    font-weight: 700;
-    font-size: 1rem;
-    line-height: 1;
-    white-space: nowrap;
+    color: #fff; font-weight: 700; font-size: 1rem; line-height: 1;
+    white-space: nowrap; text-decoration: none;
     transition: opacity .2s ease, transform .2s ease;
   }
 
-  /* three bars: absolutely positioned in the left zone */
+  /* bars (stacked left) */
   .menu-toggle .bar {
-    position: absolute;
-    left: 20px;
-    width: 22px;
-    height: 2.5px;
-    background: #fff;
-    border-radius: 2px;
-    top: 50%;
-    transform: translateY(-50%); /* base vertical centering */
-    transition: transform .25s ease, opacity .2s ease;
+    position: absolute; left: 22px; top: 50%;
+    width: 24px; height: 3px; background: #fff; border-radius: 2px;
+    transform: translateY(-50%); transition: transform .25s ease, opacity .2s ease;
   }
-  .menu-toggle .bar:nth-child(1) { transform: translateY(calc(-50% - 7px)); } /* top */
+  .menu-toggle .bar:nth-child(1) { transform: translateY(calc(-50% - 8px)); } /* top */
   .menu-toggle .bar:nth-child(2) { transform: translateY(-50%); }             /* middle */
-  .menu-toggle .bar:nth-child(3) { transform: translateY(calc(-50% + 7px)); } /* bottom */
+  .menu-toggle .bar:nth-child(3) { transform: translateY(calc(-50% + 8px)); } /* bottom */
 
-  /* dropdown drawer (unchanged) */
-  .nav { position: relative; padding: .6rem 0; }
+  /* dropdown drawer */
   .nav ul {
     position: absolute; top: 100%; left: 0; right: 0;
     margin-top: 10px; padding: 12px 16px;
     background: linear-gradient(90deg, #0077b6, #00a8b5);
-    border-radius: 12px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    border-radius: 12px; box-shadow: 0 12px 30px rgba(0,0,0,.35);
     display: flex; flex-direction: column; gap: 12px;
     visibility: hidden; opacity: 0; transform: translateY(-6px);
     pointer-events: none; z-index: 1000;
@@ -535,51 +255,8 @@ header.open .menu-toggle .label { opacity: 0; transform: translateX(6px); }
 
 /* one-time gentle pulse */
 @keyframes pulseOnce {
-  0% { transform: scale(1);   box-shadow: 0 8px 22px rgba(0,0,0,0.28); }
-  50%{ transform: scale(1.05);box-shadow: 0 12px 28px rgba(0,0,0,0.34); }
-  100%{transform: scale(1);   box-shadow: 0 8px 22px rgba(0,0,0,0.28); }
+  0% { transform: scale(1);   box-shadow: 0 8px 22px rgba(0,0,0,.28); }
+  50%{ transform: scale(1.05);box-shadow: 0 12px 28px rgba(0,0,0,.34); }
+  100%{transform: scale(1);   box-shadow: 0 8px 22px rgba(0,0,0,.28); }
 }
-.menu-toggle.pulse-once { animation: pulseOnce 1.1s ease-out 1 0.9s; }
-
-/* ===========================
-   HAMBURGER MENU (Corrected Styles)
-   =========================== */
-
-   .menu-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem; /* space between icon & text */
-  background: linear-gradient(135deg, #007bff, #00c6ff);
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-  transition: transform 0.2s ease, background 0.3s ease;
-  overflow: hidden;
-}
-
-/* Fix hamburger spans */
-.menu-toggle .bar {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: white;
-  margin: 3px auto;
-  border-radius: 1px;
-  transition: all 0.3s ease;
-}
-
-header.open .menu-toggle .bar:nth-child(1) {
-  transform: rotate(45deg) translate(4px, 4px);
-}
-header.open .menu-toggle .bar:nth-child(2) {
-  opacity: 0;
-}
-header.open .menu-toggle .bar:nth-child(3) {
-  transform: rotate(-45deg) translate(4px, -4px);
-}
+.menu-toggle.pulse-once { animation: pulseOnce 1.1s ease-out 1 .9s; }
