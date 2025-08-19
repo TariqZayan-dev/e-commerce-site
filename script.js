@@ -1,10 +1,8 @@
 /*
- * Ecommerce Website Script (AED + proper checkout rendering + qty controls)
- * - Adds products to cart (merges duplicates)
- * - Renders cart with image, name, price, qty (+ / −), and delete
- * - Totals in AED
- * - Uses localStorage
- * - Mobile: hamburger drawer menu
+ * Ecommerce Website Script
+ * - Mobile hamburger menu (pill, pulse, X morph)
+ * - Add to cart, qty (+/−), remove, totals (AED)
+ * - Checkout rendering + Netlify form (no preventDefault)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -91,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!card) return;
       const name = card.dataset.name;
       const price = parseFloat(card.dataset.price);
-      // prefer data-image; fallback to <img src>
       const image =
         card.dataset.image ||
         card.querySelector('img')?.getAttribute('src') ||
@@ -99,14 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       addItem({ name, price, image });
 
-      // simple feedback
+      // feedback
       btn.disabled = true;
       const old = btn.textContent;
       btn.textContent = 'Added!';
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = old;
-      }, 1200);
+      setTimeout(() => { btn.disabled = false; btn.textContent = old; }, 1200);
     });
   });
 
@@ -114,19 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
      SCROLL ANIMATIONS
      =========================== */
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
+    (entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    }),
     { threshold: 0.2 }
   );
-  document
-    .querySelectorAll('.animate-on-scroll')
-    .forEach((el) => observer.observe(el));
+  document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
 
   /* ===========================
      CHECKOUT PAGE
@@ -140,8 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tbody.innerHTML = '';
 
       if (items.length === 0) {
-        tbody.innerHTML =
-          '<tr><td colspan="4" style="padding:1rem;">Your cart is empty.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" style="padding:1rem;">Your cart is empty.</td></tr>';
         totalEl.textContent = `${CURRENCY} 0.00`;
         return;
       }
@@ -151,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         total += item.price * item.quantity;
         const tr = document.createElement('tr');
         tr.dataset.index = i;
-
         tr.innerHTML = `
           <td style="padding:0.75rem;">
             <img src="${item.image || ''}" alt="${item.name}"
@@ -174,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       totalEl.textContent = `${CURRENCY} ${total.toFixed(2)}`;
     };
 
-    // qty + / − / delete (event delegation)
+    // qty + / − / delete
     tbody.addEventListener('click', (e) => {
       const row = e.target.closest('tr');
       if (!row) return;
@@ -195,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // initial paint
     render();
 
-    // Netlify form submit: let the POST happen; just clear cart
+    // Netlify form submit: clear cart, let POST happen
     const form = document.getElementById('checkout-form');
     if (form) {
       form.addEventListener('submit', () => {
@@ -204,3 +192,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
