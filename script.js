@@ -3,11 +3,27 @@
  * - Mobile hamburger menu (pill, pulse, X morph)
  * - Add to cart, qty (+/−), remove, totals (AED)
  * - Checkout rendering + Netlify form (no preventDefault)
+ * - Floating cart badge sync (mobile FAB)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const CART_KEY = 'ecommerce_cart';
   const CURRENCY = 'AED';
+
+  /* ===========================
+     CART BADGE (mobile FAB)
+     =========================== */
+  const BADGE_SELECTOR = '.fab-badge';
+  function updateCartBadge() {
+    const el = document.querySelector(BADGE_SELECTOR);
+    if (!el) return;
+    let count = 0;
+    try {
+      const items = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+      count = items.reduce((sum, it) => sum + (Number(it.quantity) || 0), 0);
+    } catch {}
+    el.textContent = String(count);
+  }
 
   /* ===========================
      HAMBURGER MENU (mobile)
@@ -23,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Toggle open/close on button
-    toggleBtn.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent bubbling to document
       const isOpen = headerEl.classList.toggle('open');
       toggleBtn.setAttribute('aria-expanded', String(isOpen));
     });
@@ -41,6 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape') closeMenu();
     });
 
+    // Close when clicking outside the header/nav
+    document.addEventListener('click', (e) => {
+      if (!headerEl.contains(e.target)) closeMenu();
+    });
+
     // One-time gentle pulse to hint it's interactive
     setTimeout(() => toggleBtn.classList.add('pulse-once'), 300);
     toggleBtn.addEventListener('animationend', () => toggleBtn.classList.remove('pulse-once'));
@@ -53,7 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
     try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
     catch { return []; }
   };
-  const setCart = (items) => localStorage.setItem(CART_KEY, JSON.stringify(items));
+
+  const setCart = (items) => {
+    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    updateCartBadge(); // keep the FAB badge in sync
+  };
 
   const addItem = ({ name, price, image }) => {
     const cart = getCart();
@@ -87,12 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       const card = e.currentTarget.closest('.product-card');
       if (!card) return;
-      const name = card.dataset.name;
+
+      const name  = card.dataset.name;
       const price = parseFloat(card.dataset.price);
-      const image =
-        card.dataset.image ||
-        card.querySelector('img')?.getAttribute('src') ||
-        '';
+      const image = card.dataset.image || card.querySelector('img')?.getAttribute('src') || '';
 
       addItem({ name, price, image });
 
@@ -188,8 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
       form.addEventListener('submit', () => {
         try { localStorage.removeItem(CART_KEY); } catch (e) {}
+        updateCartBadge();
       });
     }
   }
-});
 
+  // initial badge paint for all pages
+  updateCartBadge();
+});

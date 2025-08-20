@@ -277,3 +277,195 @@ header.open .menu-toggle .label { opacity: 0; transform: translateX(6px); }
 }
 .menu-toggle.pulse-once { animation: pulseOnce 1.1s ease-out 1 .9s; }
 
+/* === Nav icons: align icon + text neatly on all screens === */
+#primary-menu a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#primary-menu a svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* Hide the top "Cart" link on mobile (FAB replaces it) */
+@media (max-width: 768px) {
+  .desktop-cart-link { display: none; }
+}
+
+/* === Floating Cart Button (mobile only) === */
+.fab-cart {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: none;                 /* hidden by default, shown on mobile */
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0099ff, #0066cc);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  z-index: 1002;
+  transition: transform .15s ease, box-shadow .25s ease;
+}
+.fab-cart:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.35),
+    0 0 10px rgba(0,153,255,.55),
+    0 0 22px rgba(0,153,255,.35);
+}
+.fab-cart svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Badge */
+.fab-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #ff4757;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+/* Only show FAB on mobile sizes */
+@media (max-width: 768px) {
+  .fab-cart { display: inline-flex; }
+}
+
+/* === Nav icons: stack vertically (icon above text) === */
+#primary-menu a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9px;
+  text-align: center;
+}
+#primary-menu a svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Keep Cart hidden on mobile since FAB is used */
+@media (max-width: 768px) {
+  .desktop-cart-link { display: none; }
+}
+
+/* Nav links with icons above text */
+.nav ul {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav li a {
+  display: flex;
+  flex-direction: column;   /* stack icon above text */
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #000;
+  font-size: 0.95rem;
+  line-height: 1.2;         /* tighter text */
+}
+
+.nav li a i {
+  font-size: 1.4rem;        /* icon size */
+  margin-bottom: 4px;       /* reduced spacing */
+}
+
+/* Hover states */
+.nav li a:hover {
+  color: var(--accent-teal);
+}
+
+/* Mobile floating cart */
+.mobile-cart {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background: linear-gradient(90deg, #0077b6, #00a8b5);
+  color: #fff;
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;    /* icon above text */
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  z-index: 2000;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-cart i {
+  font-size: 1.5rem;
+  margin-bottom: 1px;       /* tighter gap */
+}
+
+.mobile-cart:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+}
+
+/* Only show floating cart on mobile */
+@media (min-width: 769px) {
+  .mobile-cart { display: none; }
+}
+
+/* === Nav icons stacked: tighten gap you chose === */
+#primary-menu a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9px;                /* your desktop/tablet gap */
+  text-align: center;
+  color: #000;               /* stay black on hover */
+  text-decoration: none;
+  transition: transform .15s ease;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Remove color/underline on hover; use zoom instead */
+@media (hover:hover) {
+  #primary-menu a:hover { transform: scale(1.06); }
+  #primary-menu a:hover span { text-decoration: none; }
+}
+
+/* Icon size & spacing (stacked) */
+#primary-menu a svg { width: 22px; height: 22px; display: block; }
+
+/* Mobile menu: slightly bigger icon + your 1px gap */
+@media (max-width: 768px) {
+  #primary-menu a { gap: 1px; }
+  #primary-menu a svg { width: 24px; height: 24px; }
+}
+
+/* Keep Cart link hidden on mobile—FAB handles it */
+@media (max-width: 768px) {
+  .desktop-cart-link { display: none; }
+}
+
+/* Optional: also use zoom on the mobile Floating Cart button (no color change) */
+@media (hover:hover) {
+  .fab-cart:hover {
+    transform: translateY(-2px) scale(1.05);
+    /* keep your glow/shadow if you liked it */
+  }
+}

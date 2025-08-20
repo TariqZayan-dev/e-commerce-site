@@ -10,31 +10,72 @@
   <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body id="home">
   <!-- Header -->
-<header>
-  <div class="container nav">
-    <div class="logo">NetTech</div>
+  <header>
+    <div class="container nav">
+      <div class="logo">NetTech</div>
 
-    <!-- Hamburger button -->
-    <button class="menu-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Toggle menu">
+      <!-- Hamburger button -->
+      <button class="menu-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Toggle menu">
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="label">Menu</span>
-    </button>
+      </button>
 
-    <nav>
-      <ul id="primary-menu">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="checkout.html">Cart</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+      <nav aria-label="Primary">
+        <ul id="primary-menu">
+          <li>
+            <a href="#home" aria-label="Home">
+              <!-- Home icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3z"/>
+              </svg>
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="#categories" aria-label="Categories">
+              <!-- Grid icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M3 3h8v8H3V3m10 0h8v8h-8V3M3 13h8v8H3v-8m10 0h8v8h-8v-8Z"/>
+              </svg>
+              <span>Categories</span>
+            </a>
+          </li>
+          <li>
+            <a href="#products" aria-label="Products">
+              <!-- Boxes icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M21 16V8l-9-5l-9 5v8l9 5l9-5M5 9.3l7 3.9v6.5l-7-3.9V9.3m16 0v6.5l-7 3.9v-6.5l7-3.9M12 4.15L18.2 7.6L12 11.1L5.8 7.6L12 4.15Z"/>
+              </svg>
+              <span>Products</span>
+            </a>
+          </li>
+          <li>
+            <a href="#contact" aria-label="Contact">
+              <!-- Mail icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M20 8v8H4V8l8 5l8-5m0-2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2Z"/>
+              </svg>
+              <span>Contact</span>
+            </a>
+          </li>
+          <!-- Cart remains visible on desktop; CSS will hide this li on mobile -->
+          <li class="desktop-cart-link">
+            <a href="checkout.html" aria-label="Cart">
+              <!-- Cart icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M3 3h2l3.6 7.59l-1.35 2.45A2 2 0 0 0 9 15h9v-2H9.42a.25.25 0 0 1-.22-.37L9.8 11h7.45a2 2 0 0 0 1.8-1.11l3-6H6.21L5.27 2H1v2m16 13a2 2 0 1 0 2 2a2 2 0 0 0-2-2m-10 0a2 2 0 1 0 2 2a2 2 0 0 0-2-2Z"/>
+              </svg>
+              <span>Cart</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
   <!-- Hero Section -->
   <section class="hero" id="home">
@@ -53,8 +94,8 @@
         <div class="category-card animate-on-scroll">
           <img src="images/router-neon.jpg" alt="Wi-Fi Routers" />
           <div class="category-body">
-            <h3>Wi‑Fi Routers</h3>
-            <p>High‑performance wireless routers for homes and businesses.</p>
+            <h3>Wi-Fi Routers</h3>
+            <p>High-performance wireless routers for homes and businesses.</p>
             <a href="#products">View products</a>
           </div>
         </div>
@@ -62,7 +103,7 @@
           <img src="images/router-yellow.jpg" alt="Access Points" />
           <div class="category-body">
             <h3>Access Points</h3>
-            <p>Extend your Wi‑Fi coverage with mesh systems and access points.</p>
+            <p>Extend your Wi-Fi coverage with mesh systems and access points.</p>
             <a href="#products">View products</a>
           </div>
         </div>
@@ -92,12 +133,12 @@
       <h2 class="animate-on-scroll">Featured Products</h2>
       <div class="product-grid">
         <!-- Product 1 -->
-        <div class="product-card animate-on-scroll" data-name="Ultra Wi‑Fi Router" data-price="149.99" data-image="images/router-neon.jpg">
-          <img src="images/router-neon.jpg" alt="Ultra Wi‑Fi Router" />
+        <div class="product-card animate-on-scroll" data-name="Ultra Wi-Fi Router" data-price="149.99" data-image="images/router-neon.jpg">
+          <img src="images/router-neon.jpg" alt="Ultra Wi-Fi Router" />
           <div class="product-body">
-            <h4>Ultra Wi‑Fi Router</h4>
+            <h4>Ultra Wi-Fi Router</h4>
             <div class="price">AED 149.99</div>
-            <p>Dual‑band router with advanced beamforming technology for maximum coverage.</p>
+            <p>Dual-band router with advanced beamforming technology for maximum coverage.</p>
             <button class="add-to-cart">Add to Cart</button>
           </div>
         </div>
@@ -107,7 +148,7 @@
           <div class="product-body">
             <h4>Mesh Access Point</h4>
             <div class="price">AED 129.99</div>
-            <p>Create a seamless network with this easy‑to‑install mesh access point.</p>
+            <p>Create a seamless network with this easy-to-install mesh access point.</p>
             <button class="add-to-cart">Add to Cart</button>
           </div>
         </div>
@@ -117,15 +158,15 @@
           <div class="product-body">
             <h4>Cat6 Cable Pack</h4>
             <div class="price">AED 19.99</div>
-            <p>Ten 2‑metre Cat6 cables for high‑speed wired connections.</p>
+            <p>Ten 2-metre Cat6 cables for high-speed wired connections.</p>
             <button class="add-to-cart">Add to Cart</button>
           </div>
         </div>
         <!-- Product 4 -->
-        <div class="product-card animate-on-scroll" data-name="8‑Port Gigabit Switch" data-price="99.99" data-image="images/server-rack.jpg">
-          <img src="images/server-rack.jpg" alt="8‑Port Gigabit Switch" />
+        <div class="product-card animate-on-scroll" data-name="8-Port Gigabit Switch" data-price="99.99" data-image="images/server-rack.jpg">
+          <img src="images/server-rack.jpg" alt="8-Port Gigabit Switch" />
           <div class="product-body">
-            <h4>8‑Port Gigabit Switch</h4>
+            <h4>8-Port Gigabit Switch</h4>
             <div class="price">AED 99.99</div>
             <p>Compact unmanaged switch with eight gigabit ports and durable metal housing.</p>
             <button class="add-to-cart">Add to Cart</button>
@@ -140,7 +181,7 @@
     <div class="container footer-grid">
       <div>
         <h5>About NetTech</h5>
-        <p>Your trusted source for networking equipment. We pride ourselves on delivering top‑quality products and exceptional customer service.</p>
+        <p>Your trusted source for networking equipment. We pride ourselves on delivering top-quality products and exceptional customer service.</p>
       </div>
       <div>
         <h5>Quick Links</h5>
@@ -156,10 +197,19 @@
         <p>Sharjah, UAE</p>
         <p>Email: support@nettech.com</p>
         <p>Phone: +971 54 247 0680</p>
-        <a class="whatsapp-btn" href="https://wa.me/971542470680" target="_blank">WhatsApp Us</a>
+        <a class="whatsapp-btn" href="https://wa.me/971542470680" target="_blank" rel="noopener">WhatsApp Us</a>
       </div>
     </div>
   </footer>
+
+  <!-- Mobile Floating Cart (FAB) -->
+  <a href="checkout.html" class="fab-cart" aria-label="Open cart">
+    <!-- Cart icon -->
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="currentColor" d="M3 3h2l3.6 7.59l-1.35 2.45A2 2 0 0 0 9 15h9v-2H9.42a.25.25 0 0 1-.22-.37L9.8 11h7.45a2 2 0 0 0 1.8-1.11l3-6H6.21L5.27 2H1v2m16 13a2 2 0 1 0 2 2a2 2 0 0 0-2-2m-10 0a2 2 0 1 0 2 2a2 2 0 0 0-2-2Z"/>
+    </svg>
+    <span class="fab-badge" aria-live="polite" aria-atomic="true">0</span>
+  </a>
 
   <!-- Scripts -->
   <script src="script.js"></script>
