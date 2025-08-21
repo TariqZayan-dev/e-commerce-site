@@ -4,6 +4,7 @@
  * - Add to cart, qty (+/−), remove, totals (AED)
  * - Checkout rendering + Netlify form (no preventDefault)
  * - Floating cart badge sync (mobile FAB)
+ * - Mobile-friendly animations (stagger + tap feedback)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -129,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ===========================
-     SCROLL ANIMATIONS
+     SCROLL ANIMATIONS (tuned for mobile)
      =========================== */
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((entry) => {
@@ -138,9 +139,29 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.unobserve(entry.target);
       }
     }),
-    { threshold: 0.2 }
+    // earlier trigger on phones, slight bottom margin so it fires before fully in view
+    { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
   );
-  document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+
+  // add stagger classes to any .animate-on-scroll element
+  const scrollEls = document.querySelectorAll('.animate-on-scroll');
+  scrollEls.forEach((el, i) => {
+    el.classList.add(`stagger-${(i % 4) + 1}`); // 1..4 repeating
+    observer.observe(el);
+  });
+
+  /* ===========================
+     TAP FEEDBACK (mobile touch)
+     =========================== */
+  const tappables = document.querySelectorAll('.product-card, .category-card, .btn-primary, .add-to-cart');
+  tappables.forEach(el => {
+    el.addEventListener('touchstart', () => {
+      el.classList.add('tap-animate');
+    }, { passive: true });
+    el.addEventListener('animationend', () => {
+      el.classList.remove('tap-animate');
+    });
+  });
 
   /* ===========================
      CHECKOUT PAGE
@@ -220,3 +241,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // initial badge paint for all pages
   updateCartBadge();
 });
+

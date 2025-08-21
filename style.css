@@ -469,3 +469,59 @@ header.open .menu-toggle .label { opacity: 0; transform: translateX(6px); }
     /* keep your glow/shadow if you liked it */
   }
 }
+
+/* ===============================
+   Mobile Animations & Motions
+   =============================== */
+
+/* Keyframes */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes tapPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+/* Scroll reveal base */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.animate-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered entry (delay per item) */
+.animate-on-scroll.stagger-1 { transition-delay: 0.1s; }
+.animate-on-scroll.stagger-2 { transition-delay: 0.2s; }
+.animate-on-scroll.stagger-3 { transition-delay: 0.3s; }
+.animate-on-scroll.stagger-4 { transition-delay: 0.4s; }
+
+/* Tap feedback (for touch) */
+.tap-animate {
+  animation: tapPulse 0.2s ease;
+}
+
+/* Mobile-only tweaks */
+@media (max-width: 768px) {
+  .product-card, .category-card, .btn-primary, .add-to-cart {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .product-card:active,
+  .category-card:active,
+  .btn-primary:active,
+  .add-to-cart:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+}
+
